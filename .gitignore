@@ -1,0 +1,26 @@
+# Fichiers sensibles
+.env
+src/main/webapp/META-INF/context.xml
+
+# VS Code Local History (peut contenir des données sensibles)
+.history/
+
+# Build Maven
+target/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
