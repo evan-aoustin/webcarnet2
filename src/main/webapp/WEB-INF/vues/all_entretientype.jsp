@@ -22,6 +22,7 @@
             <thead>
               <tr>
                 <th scope="col">Code</th>
+                <th scope="col">Libellé</th>
                 <th scope="col">Nb de km</th>
                 <th scope="col">Nb de km tolérer</th>
                 <th></th>
@@ -31,10 +32,11 @@
                 <c:forEach var="et" items="${allEntretienTypes}">
                     <tr>
                       <th>${et.getCode()}</th>
+                      <td>${et.getLibelle()}</td>
                       <td>${et.getNbKm()}</td>
                       <td>${et.getNbKmTolere()}</td>
                       <td class="btns">
-                        <a href="${pageContext.request.contextPath}/srv_form_entretientype?action=update&code=${et.getCode()}&nbKm=${et.getNbKm()}&nbKmTolere=${et.getNbKmTolere()}" class="btn btn-outline-primary">Modifier</a>
+                        <a href="${pageContext.request.contextPath}/srv_form_entretientype?action=update&code=${et.getCode()}&libelle=${et.getLibelle()}&nbKm=${et.getNbKm()}&nbKmTolere=${et.getNbKmTolere()}" class="btn btn-outline-primary">Modifier</a>
                         <form method="post" action="srv_all_entretientype">
                             <input id="code" name="code" type="hidden" value="${et.getCode()}" />
                             <button class="btn btn-outline-danger" type="submit" name="delete" value="true">Supprimer</button>

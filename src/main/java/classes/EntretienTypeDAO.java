@@ -36,6 +36,7 @@ public class EntretienTypeDAO {
             while (rs.next()) {
                 EntretienType unE = new EntretienType(
                     rs.getInt("code"),
+                    rs.getString("libelle"),
                     rs.getInt("nbKm"),
                     rs.getInt("nbKmTolere")
                 );
@@ -63,6 +64,7 @@ public class EntretienTypeDAO {
                 if (rs.next()) {
                     return new EntretienType(
                         rs.getInt("code"),
+                        rs.getString("libelle"),
                         rs.getInt("nbKm"),
                         rs.getInt("nbKmTolere")
                     );
@@ -114,6 +116,25 @@ public class EntretienTypeDAO {
             e.printStackTrace();
         }
     }
+
+    public void add(String libelle, int nbKm, int nbKmTolere) {
+        String request = "INSERT INTO EntretienType (libelle, nbKm, nbKmTolere) VALUES (?, ?, ?)";
+        
+        try {
+            try (Connection conn = ConnectionDAO.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(request);) {
+                
+                pstmt.setString(1, libelle);
+                pstmt.setInt(2, nbKm);
+                pstmt.setInt(3, nbKmTolere);
+                
+                pstmt.executeUpdate();
+            }
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+    }
     
     public void delete(int code) {        
         String request = "DELETE FROM EntretienType WHERE code = ?;";
@@ -140,6 +161,25 @@ public class EntretienTypeDAO {
                 pstmt.setInt(1, newKm);
                 pstmt.setInt(2, newKmTolere);
                 pstmt.setInt(3, code);
+                
+                pstmt.executeUpdate();
+            }
+
+        } catch (SQLException | NamingException e) {
+
+        }
+    }
+
+    public void update(String libelle, int newKm, int newKmTolere, int code) {
+        String request = "UPDATE EntretienType SET libelle = ?, nbKm = ?, nbKmTolere = ? WHERE code = ?;";
+        
+        try {
+            try (Connection conn = ConnectionDAO.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(request);) {
+                pstmt.setString(1, libelle);
+                pstmt.setInt(2, newKm);
+                pstmt.setInt(3, newKmTolere);
+                pstmt.setInt(4, code);
                 
                 pstmt.executeUpdate();
             }

@@ -56,6 +56,7 @@ DROP TABLE IF EXISTS `EntretienType`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `EntretienType` (
   `code` int(11) NOT NULL,
+  `libelle` varchar(100) NOT NULL DEFAULT '',
   `nbKm` int(11) NOT NULL,
   `nbKmTolere` int(11) NOT NULL,
   PRIMARY KEY (`code`)

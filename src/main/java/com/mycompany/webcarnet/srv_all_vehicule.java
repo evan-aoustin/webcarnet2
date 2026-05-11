@@ -98,7 +98,7 @@ public class srv_all_vehicule extends HttpServlet {
                 vdao.delete(numImma);
             }
 
-            response.sendRedirect("srv_all_entretientype");
+            response.sendRedirect(request.getContextPath() + "/admin/srv_all_vehicule");
 
         } catch (SQLException | NamingException e) {
             try (PrintWriter out = response.getWriter()) {

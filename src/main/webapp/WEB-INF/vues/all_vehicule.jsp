@@ -32,6 +32,7 @@
                         <td>${v.getNumImma()}</td>
                         <td>${v.getNbKmActuel()}</td>
                         <td class="btns">
+                            <a href="${pageContext.request.contextPath}/srv_vehicule?immat=${v.getNumImma()}" class="btn btn-outline-secondary">Voir</a>
                             <a href="${pageContext.request.contextPath}/srv_form_vehicule?action=update&immat=${v.getNumImma()}&km=${v.getNbKmActuel()}" class="btn btn-outline-primary">Modifier</a>
                             <form method="post" action="srv_all_vehicule">
                                 <input id="numImma" name="numImma" type="hidden" value="${v.getNumImma()}" />

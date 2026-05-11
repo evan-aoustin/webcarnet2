@@ -47,7 +47,9 @@
                         </c:if>
                         value="${et.getCode()}">
                             
-                            <b>${et.getCode()}</b><i>(nbKm : ${et.getNbKm()}, nbKmTolere : ${et.getNbKmTolere()})</i>
+                            <c:choose>
+                                <c:when test="${not empty et.getLibelle()}">${et.getLibelle()} — </c:when>
+                            </c:choose>${et.getNbKm()} km (±${et.getNbKmTolere()} km)
                         
                         </option>
                     </c:forEach>

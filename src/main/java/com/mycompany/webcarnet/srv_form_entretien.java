@@ -85,6 +85,17 @@ public class srv_form_entretien extends HttpServlet {
                 request.setAttribute("vehiImmat", vehiImmat);
                 request.setAttribute("entretientypeCode", entretientypeCode);
                 request.setAttribute("action", "update");
+            } else {
+                // pre-remplissage depuis l'atelier ou la fiche vehicule
+                String vehiculeImmat = request.getParameter("vehiculeImmat");
+                String entretientypeCodeParam = request.getParameter("entretientypeCode");
+
+                if (vehiculeImmat != null && !vehiculeImmat.isEmpty()) {
+                    request.setAttribute("vehiImmat", vehiculeImmat);
+                }
+                if (entretientypeCodeParam != null && !entretientypeCodeParam.isEmpty()) {
+                    request.setAttribute("entretientypeCode", Integer.parseInt(entretientypeCodeParam));
+                }
             }
             
             request.setAttribute("allVehicules", allVehicules);
@@ -116,22 +127,25 @@ public class srv_form_entretien extends HttpServlet {
             String commentaire = request.getParameter("commentaire");
             int entretienTypeID = Integer.parseInt(request.getParameter("entretienTypeID"));
             String vehiculeImmat = request.getParameter("vehiculeImmat");
-            String action = request.getParameter("action");
+            String idParam = request.getParameter("idEntretien");
 
             EntretienDAO edao = new EntretienDAO();
-                        
-            if ("update".equals(action)) {
-                
+
+            if (idParam == null || idParam.isEmpty()) {
+                edao.add(dateEntretien, nbKmCompteur, commentaire, entretienTypeID, vehiculeImmat);
             } else {
-                
+                int idEntretien = Integer.parseInt(idParam);
+                edao.update(idEntretien, dateEntretien, nbKmCompteur, commentaire, entretienTypeID, vehiculeImmat);
             }
-            
-            edao.add(dateEntretien, nbKmCompteur, commentaire, entretienTypeID, vehiculeImmat);
+
+            // mettre a jour le kilometrage du vehicule
+            VehiculeDAO vdao = new VehiculeDAO();
+            vdao.update(nbKmCompteur, vehiculeImmat);
 
             response.sendRedirect("/webcarnet/srv_all_entretien");
             
         } catch (SQLException | NamingException e) {
-
+            e.printStackTrace();
         }
     }
 

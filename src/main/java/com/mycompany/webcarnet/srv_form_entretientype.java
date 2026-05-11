@@ -59,10 +59,12 @@ public class srv_form_entretientype extends HttpServlet {
 
         if ("update".equals(action)) {
             int code = Integer.parseInt(request.getParameter("code"));
+            String libelle = request.getParameter("libelle");
             int nbKm = Integer.parseInt(request.getParameter("nbKm"));
             int nbKmTolere = Integer.parseInt(request.getParameter("nbKmTolere")); 
 
             request.setAttribute("code", code);
+            request.setAttribute("libelle", libelle);
             request.setAttribute("nbKm", nbKm);
             request.setAttribute("nbKmTolere", nbKmTolere);
         }
@@ -85,19 +87,19 @@ public class srv_form_entretientype extends HttpServlet {
         
         try {
             String codeParam = request.getParameter("code");
+            String libelle = request.getParameter("libelle");
+            if (libelle == null) libelle = "";
             int km = Integer.parseInt(request.getParameter("km"));
             int kmTolere = Integer.parseInt(request.getParameter("kmTolere"));
 
             EntretienTypeDAO etdao = new EntretienTypeDAO();
 
             if (codeParam == null || codeParam.isEmpty()) {
-                etdao.add(km, kmTolere);
+                etdao.add(libelle, km, kmTolere);
             } else {
                 int code = Integer.parseInt(codeParam);
-                etdao.update(km, kmTolere, code);
+                etdao.update(libelle, km, kmTolere, code);
             }
-            
-
 
             response.sendRedirect("/webcarnet/srv_all_entretientype");
             

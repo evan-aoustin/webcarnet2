@@ -103,6 +103,66 @@ public class EntretienDAO {
 
        }
     }
+
+    public void update(int idEntretien, String dateEntretien, int nbKmCompteur, String commentaire, int entretienTypeID, String vehiculeImmat) {
+        String request = "UPDATE Entretien SET dateEntretien = ?, nbKmCompteur = ?, commentaire = ?, codeEntretienType = ?, numImma = ? WHERE idEntretien = ?;";
+
+        try {
+            try (Connection conn = ConnectionDAO.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(request)) {
+
+                pstmt.setString(1, dateEntretien);
+                pstmt.setInt(2, nbKmCompteur);
+                pstmt.setString(3, commentaire);
+                pstmt.setInt(4, entretienTypeID);
+                pstmt.setString(5, vehiculeImmat);
+                pstmt.setInt(6, idEntretien);
+
+                pstmt.executeUpdate();
+            }
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Entretien> getByVehicule(String numImma) {
+        String query = "SELECT * FROM Entretien WHERE numImma = ?";
+        ArrayList<Entretien> entretiens = new ArrayList<>();
+
+        try (Connection conn = ConnectionDAO.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, numImma);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                VehiculeDAO vdao = new VehiculeDAO();
+                EntretienTypeDAO etdao = new EntretienTypeDAO();
+                Vehicule vehicule = vdao.get(numImma);
+
+                while (rs.next()) {
+                    EntretienType entretienType = etdao.get(rs.getInt("codeEntretienType"));
+                    LocalDate ldate = rs.getDate("dateEntretien").toLocalDate();
+
+                    Entretien unE = new Entretien(
+                        rs.getInt("idEntretien"),
+                        ldate,
+                        rs.getString("commentaire"),
+                        entretienType,
+                        vehicule,
+                        rs.getInt("nbKmCompteur")
+                    );
+                    entretiens.add(unE);
+                }
+            }
+
+            return entretiens;
+
+        } catch (SQLException | NamingException e) {
+            e.printStackTrace();
+            return entretiens;
+        }
+    }
      
   
 

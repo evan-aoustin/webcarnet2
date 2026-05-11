@@ -20,7 +20,11 @@
         
         <form method="post" action="srv_form_entretientype">
             <div class="form-group">
-               
+                <label>Libellé</label>
+                <input class="form-control" type="text" id="libelle" name="libelle" value="${libelle}" />
+
+                <br>
+
                 <label>Nb Km</label>
                 <input class="form-control" type="number" id="km" name="km" value="${nbKm}" />
 

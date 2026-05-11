@@ -27,7 +27,7 @@ public class Entretien {
         this.nbKmCompteur=km;
     }
     public int getnbKmCompteur(){
-        return vehicule.getNbKmActuel();
+        return nbKmCompteur;
     }
 
     public int getIdEntretien() {

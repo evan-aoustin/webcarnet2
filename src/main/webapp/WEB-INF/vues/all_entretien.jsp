@@ -37,7 +37,7 @@
                       <td>${e.getNbKmCompteur()}</td>
                       <td>${e.getCommentaire()}</td>
                       <td>${e.getVehicule().getNumImma()}</td>
-                      <td>${e.getType().getCode()}</td>
+                      <td>${e.getType().getLibelle()} (${e.getType().getCode()})</td>
                       <td class="btns">
                         <a href="${pageContext.request.contextPath}/srv_form_entretien?action=update&idEntretien=${e.getIdEntretien()}&date=${e.getDate().toString()}&nbKmCompteur=${e.getNbKmCompteur()}&commentaire=${e.getCommentaire()}&vehiImmat=${e.getVehicule().getNumImma()}&entretientypeCode=${e.getType().getCode()}" class="btn btn-outline-primary">Modifier</a>
                         <form method="post" action="srv_all_entretien">
